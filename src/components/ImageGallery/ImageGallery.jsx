@@ -1,38 +1,48 @@
 import React from 'react';
 import { getGalleryFetch } from '../Api/Api';
 
+
 class ImageGallery extends React.Component {
   state = {
     images: [],
-    error:'',
+    error: '',
+    isLoading:false,
   };
 
   async componentDidUpdate(prevProps) {
     if (prevProps.searchText !== this.props.searchText) {
       try {
+        this.setState({isLoading:true})
         const { hits } = await getGalleryFetch(this.props.searchText);
-          this.setState({images: hits,});
- console.log(this.state.images);
- 
+
+        if (true) {
+          this.setState({ images: hits });
+          return;
+        }
       } catch (error) {
-        this.setState({ error });
+        this.setState({ error: error.message });
       }
     }
-    
   }
+
   render() {
-    console.log(this.state.images);
-    return (
-      this.state.images.length > 0 && (
-        <ul className="gallery">
-          {this.state.images.map(({ id, previewURL, tags }) => (
-            <li key={id}>
-              <img src={previewURL} alt={tags} />
-            </li>
-          ))}
-        </ul>
+    const { images,isLoading } = this.state;
+
+    return (<>{
+      isLoading&&(
+        <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
       )
-    );
+    }
+      <ul className="gallery">
+        {images.map(({ id, previewURL, tags }) => (
+          <li key={id}>
+            <img src={previewURL} alt={tags} />
+          </li>
+        ))}
+      </ul>
+      </>);
   }
 }
 
