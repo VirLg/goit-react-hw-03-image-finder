@@ -1,4 +1,4 @@
-const { Component, Children } = require("react");
+const { Component } = require("react");
 
 class ModalWindow extends Component{
 componentDidMount(){
