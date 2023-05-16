@@ -24,7 +24,7 @@ render(){
       <SearchBar onSubmit={this.heandleSearch}/>
       <ImageGallery searchText={this.state.searchText} />
     </div>
-  );}
+  )}
 }
 
 export default App;
