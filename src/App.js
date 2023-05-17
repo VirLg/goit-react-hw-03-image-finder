@@ -9,6 +9,14 @@ import ModalWindow from 'components/ModalWindow/ModalWindov';
 class App extends React.Component {
 state={
   searchText:'',
+  showModal:false,
+}
+
+
+toggleModal=()=>{
+  this.setState({
+    showModal:!this.state.showModal,
+  })
 }
 
 heandleSearch=(searchText)=>{
@@ -28,7 +36,7 @@ render(){
     <div className="App">
       <SearchBar onSubmit={this.heandleSearch}/>
       <ImageGallery searchText={this.state.searchText} />
-      <ModalWindow onClick={this.handleModalClick}/>
+      {this.state.showModal&&<ModalWindow/>}
     </div>
     )}
 }

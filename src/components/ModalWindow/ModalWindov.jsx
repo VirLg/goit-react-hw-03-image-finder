@@ -1,6 +1,7 @@
-const { Component } = require("react");
+import React from "react";
+import {ModalBackdrop, ModalItem} from './ModalWindow.styled'
 
-class ModalWindow extends Component{
+class ModalWindow extends React.Component{
 componentDidMount(){
     document.addEventListener("keydown",this.handlePressEscape)
 }
@@ -12,11 +13,13 @@ console.log('press');
 
     render(){
         return(
-        <div className="overlay" onClick={this.close}>
-  <div className="modal">
-    <img src="" alt="" />
-  </div>
-</div>
+        
+<ModalBackdrop className="Modal__Backdrop">
+<ModalItem className="Modal__Item">
+<img src="" alt="" />
+</ModalItem>
+</ModalBackdrop>
+
         )
     }
 }
