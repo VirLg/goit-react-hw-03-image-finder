@@ -2,6 +2,7 @@ import React from "react";
 import {ModalBackdrop, ModalItem} from './ModalWindow.styled'
 
 class ModalWindow extends React.Component{
+  
 componentDidMount(){
     document.addEventListener("keydown",this.handlePressEscape)
 }
@@ -10,6 +11,8 @@ console.log('press');
     if(e.code==='Escape') this.props.close()
 
 }
+
+
 
     render(){
         return(
