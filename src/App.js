@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import SearchBar from './components/SearchBar/SearchBar';
+import {Button} from './components/Button/Button'
 
 import ImageGallery from 'components/ImageGallery/ImageGallery';
 // import ItemImage from './components/ImageItem/ImageItem';
@@ -29,7 +30,7 @@ class App extends React.Component {
     if (prevState.searchText !== searchText) {
       try {
         this.setState({ loading: true });
-        const data = await fetch(`${BASE_URL}/?key=${API_KEY}&q=${searchText}`);
+        const data = await fetch(`${BASE_URL}/?key=${API_KEY}&q=${searchText}&per_page=12`);
         if (data.status !== 200) {
           return Promise.reject(new Error('Search is empty'));
         }
@@ -44,11 +45,14 @@ class App extends React.Component {
   }
 
   getFetch = ({ hits }) => {
-    console.log(hits);
-    this.setState({ images: hits });
+       this.setState({ images: hits });
   };
 
-  handleModalOpen = ({ images }) => {};
+handleLoadMore=(searchText)=>{
+
+  this.data(searchText)
+  console.log(this.state.searchText);
+} 
 
   render() {
     return (
@@ -58,6 +62,7 @@ class App extends React.Component {
         <SearchBar onSubmit={this.heandleSearch} />
 
         <ImageGallery options={this.state.images} />
+       <Button onClick={this.handleLoadMore}>LoadMore</Button>
       </div>
     );
   }
