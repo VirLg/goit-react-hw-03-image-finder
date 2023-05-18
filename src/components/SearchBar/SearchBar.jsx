@@ -7,12 +7,15 @@ value:'',
 
 heandleChange=({target})=>{
 const {value}=target;
+
 this.setState({value:value,})
 }    
 
 handleSubmit =(evt)=>{
     evt.preventDefault();
-
+if(this.state.value.trim()===''){
+  return
+}
     this.props.onSubmit(this.state.value)
     }
 
