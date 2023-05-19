@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ImageItem from '../ImageItem/ImageItem'
 import {ImageGalleryCss} from './ImageGallery.styled'
 // import ModalWindow from 'components/ModalWindow/ModalWindov';
@@ -32,6 +33,10 @@ componentDidUpdate(prevProps, prevState){
 }
 
 export default ImageGallery;
+
+ImageGallery.propTypes={
+  options:PropTypes.array.isRequired,
+}
 
 // class ImageGallery extends React.Component{
 //   state={

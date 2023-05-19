@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+
 import SearchBar from './components/SearchBar/SearchBar';
 import Button from 'components/Button/Button';
 import {AppDiv} from './App.styled'
@@ -84,3 +85,5 @@ class App extends React.Component {
 }
 
 export default App;
+
+
