@@ -13,7 +13,7 @@ class App extends React.Component {
   state = {
     searchText: '',
 
-    images: null,
+    images: [],
     loading: false,
     error: null,
     page:1,
@@ -49,7 +49,9 @@ class App extends React.Component {
   }
 
   getFetch = ({ hits }) => {
-       this.setState({ images: hits });
+    console.log(hits);
+
+       this.setState(prevState=>({ images:[...prevState.images,...hits]}));
   };
 
 

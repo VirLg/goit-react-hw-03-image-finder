@@ -14,7 +14,7 @@ class ImageItem extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.images !== this.props.card) {
-      this.setState({ images: this.props.card });
+      this.setState(()=>({ images: this.props.card }));
     }
   }
 
@@ -33,7 +33,7 @@ class ImageItem extends Component {
       <>
         {this.state.images &&
           this.state.images.map(
-            ({ id, previewURL, tags, largeImageURL }, idx) => (
+            ({ id, previewURL, tags, largeImageURL }) => (
               <li className="gallery__item" key={id}>
                 <img
                   src={previewURL}
