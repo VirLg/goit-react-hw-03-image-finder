@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import SearchBar from './components/SearchBar/SearchBar';
 import Button from 'components/Button/Button';
+import {AppDiv} from './App.styled'
 
 import ImageGallery from 'components/ImageGallery/ImageGallery';
 
@@ -71,13 +72,13 @@ class App extends React.Component {
     const { error, loading, images, buttonVisible } = this.state;
 
     return (
-      <div className="App">
+      <AppDiv className="App">
         <SearchBar onSubmit={this.heandleSearch} />
         {loading && <div>загружаем</div>}
         {error && <h1>{error.message}</h1>}
         <ImageGallery options={images} />
         {buttonVisible && <Button page={this.handleLoadMore} />}
-      </div>
+      </AppDiv>
     );
   }
 }
