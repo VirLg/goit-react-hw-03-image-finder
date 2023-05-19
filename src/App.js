@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import SearchBar from './components/SearchBar/SearchBar';
-import {Button} from './components/Button/Button'
+import Button from 'components/Button/Button';
 
 import ImageGallery from 'components/ImageGallery/ImageGallery';
 // import ItemImage from './components/ImageItem/ImageItem';
@@ -16,6 +16,7 @@ class App extends React.Component {
     images: null,
     loading: false,
     error: null,
+    page:1,
   };
 
   heandleSearch = searchText => {
@@ -25,12 +26,13 @@ class App extends React.Component {
   };
 
   async componentDidUpdate(prevProps, prevState) {
-    const { searchText } = this.state;
+    console.log('!!!!!!!!!!!!');
+    const { searchText,page } = this.state;
 
-    if (prevState.searchText !== searchText) {
+    if (prevState.searchText !== searchText||prevState.page !== page) {
       try {
         this.setState({ loading: true });
-        const data = await fetch(`${BASE_URL}/?key=${API_KEY}&q=${searchText}&per_page=12`);
+        const data = await fetch(`${BASE_URL}/?key=${API_KEY}&q=${searchText}&per_page=12&page=${page}`);
         if (data.status !== 200) {
           return Promise.reject(new Error('Search is empty'));
         }
@@ -42,16 +44,19 @@ class App extends React.Component {
         this.setState({ loading: false });
       }
     }
+
+    
   }
 
   getFetch = ({ hits }) => {
        this.setState({ images: hits });
   };
 
-handleLoadMore=(searchText)=>{
 
-  this.data(searchText)
-  console.log(this.state.searchText);
+
+handleLoadMore=(number)=>{
+  console.log(number);
+this.setState({page:number})
 } 
 
   render() {
@@ -62,7 +67,7 @@ handleLoadMore=(searchText)=>{
         <SearchBar onSubmit={this.heandleSearch} />
 
         <ImageGallery options={this.state.images} />
-       <Button onClick={this.handleLoadMore}>LoadMore</Button>
+       <Button page={this.handleLoadMore}/>
       </div>
     );
   }
