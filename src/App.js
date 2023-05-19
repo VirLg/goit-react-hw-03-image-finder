@@ -4,7 +4,6 @@ import SearchBar from './components/SearchBar/SearchBar';
 import Button from 'components/Button/Button';
 
 import ImageGallery from 'components/ImageGallery/ImageGallery';
-// import ItemImage from './components/ImageItem/ImageItem';
 
 const BASE_URL = 'https://pixabay.com/api/';
 const API_KEY = '34368263-756a5eb3a3e360b335b61bac8';
@@ -12,27 +11,27 @@ const API_KEY = '34368263-756a5eb3a3e360b335b61bac8';
 class App extends React.Component {
   state = {
     searchText: '',
-
     images: [],
     loading: false,
     error: null,
-    page:1,
-  };
-
-  heandleSearch = searchText => {
-    this.setState({
-      searchText: searchText,
-    });
+    page: 1,
+    buttonVisible: false,
   };
 
   async componentDidUpdate(prevProps, prevState) {
-    console.log('!!!!!!!!!!!!');
-    const { searchText,page } = this.state;
+    const { searchText, page } = this.state;
 
-    if (prevState.searchText !== searchText||prevState.page !== page) {
+    if (prevState.searchText !== searchText || prevState.page !== page) {
+      this.setState({
+        
+        buttonVisible: false,
+      })
+  
       try {
         this.setState({ loading: true });
-        const data = await fetch(`${BASE_URL}/?key=${API_KEY}&q=${searchText}&per_page=12&page=${page}`);
+        const data = await fetch(
+          `${BASE_URL}/?key=${API_KEY}&q=${searchText}&per_page=12&page=${page}`
+        );
         if (data.status !== 200) {
           return Promise.reject(new Error('Search is empty'));
         }
@@ -44,40 +43,43 @@ class App extends React.Component {
         this.setState({ loading: false });
       }
     }
-
-    
   }
+  heandleSearch = searchText => {
+    this.setState({
+      searchText: searchText,
+      images: [],
+    });
+  };
+  getFetch = ({ hits, totalHits }) => {
 
-  getFetch = ({ hits }) => {
-    console.log(hits);
-
-       this.setState(prevState=>({ images:[...prevState.images,...hits]}));
+    this.setState(prevState => ({ images: [...prevState.images, ...hits] }));
+    if (totalHits === 0)
+      this.setState({
+        images: [],
+      });
+    if (totalHits > 1)
+      this.setState({
+        buttonVisible: true,
+      });
   };
 
-
-
-handleLoadMore=(number)=>{
-  console.log(number);
-this.setState({page:number})
-} 
+  handleLoadMore = number => {
+    this.setState({ page: number });
+  };
 
   render() {
+    const { error, loading, images, buttonVisible } = this.state;
+
     return (
       <div className="App">
-        {this.state.error && <h1>{this.state.error.message}</h1>}
-        {this.state.loading && <div>загружаем</div>}
         <SearchBar onSubmit={this.heandleSearch} />
-
-        <ImageGallery options={this.state.images} />
-       <Button page={this.handleLoadMore}/>
+        {loading && <div>загружаем</div>}
+        {error && <h1>{error.message}</h1>}
+        <ImageGallery options={images} />
+        {buttonVisible && <Button page={this.handleLoadMore} />}
       </div>
     );
   }
 }
 
 export default App;
-
-// {this.state.images && <ImageItem images={this.state.images} />}
-// {
-//   /* {<ItemImage options={this.state.images}/>} */
-// }

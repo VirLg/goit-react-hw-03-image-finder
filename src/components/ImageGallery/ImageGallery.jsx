@@ -1,5 +1,6 @@
 import React from 'react';
 import ImageItem from '../ImageItem/ImageItem'
+import {ImageGalleryCss} from './ImageGallery.styled'
 // import ModalWindow from 'components/ModalWindow/ModalWindov';
 
 
@@ -19,12 +20,12 @@ componentDidUpdate(prevProps, prevState){
 
   render(){
     return (
-      <>
-        <ul className="gallery">
+      
+        <ImageGalleryCss className="gallery">
           <ImageItem card={this.state.images} />
           
-        </ul>
-      </>
+        </ImageGalleryCss>
+     
     )
   }
 

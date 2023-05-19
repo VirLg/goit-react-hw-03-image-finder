@@ -1,43 +1,44 @@
-import React from "react";
+import React from 'react';
+import { Form, SearchFormButton, SearchFormInput } from './SearchBar.styled';
 
-class SearchBar extends React.Component{
-    state={
-value:'',
-    }
+class SearchBar extends React.Component {
+  state = {
+    value: '',
+  };
 
-heandleChange=({target})=>{
-const {value}=target;
+  heandleChange = ({ target }) => {
+    const { value } = target;
+    this.setState({ value: value });
+  };
 
-this.setState({value:value,})
-}    
-
-handleSubmit =(evt)=>{
+  handleSubmit = evt => {
     evt.preventDefault();
-if(this.state.value.trim()===''){
-  return
-}
-    this.props.onSubmit(this.state.value)
+    const { value } = this.state;
+    if (value.trim() === '') {
+      return;
     }
+    this.props.onSubmit(value);
+  };
 
-    render(){
-        return(<header className="searchbar">
-        <form className="form" onSubmit={this.handleSubmit}>
-          <button type="submit" className="button">
+  render() {
+    return (
+      <header className="searchbar">
+        <Form className="form" onSubmit={this.handleSubmit}>
+          <SearchFormButton type="submit" className="button">
             <span className="button-label">Search</span>
-          </button>
-      
-          <input
+          </SearchFormButton>
+
+          <SearchFormInput
             className="input"
             type="text"
-           
             placeholder="Search images and photos"
             value={this.state.value}
-           onChange={this.heandleChange}
-            
+            onChange={this.heandleChange}
           />
-        </form>
-      </header>)
-    }
+        </Form>
+      </header>
+    );
+  }
 }
 
-export default SearchBar
+export default SearchBar;

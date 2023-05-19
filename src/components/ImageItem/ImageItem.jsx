@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import ModalWindow from '../ModalWindow/ModalWindov';
+import {ImageGalleryItem} from './ImageItem.styled'
 
 class ImageItem extends Component {
   state = {
@@ -33,14 +34,14 @@ class ImageItem extends Component {
       <>
         {this.state.images &&
           this.state.images.map(
-            ({ id, previewURL, tags, largeImageURL }) => (
-              <li className="gallery__item" key={id}>
+            ({ id, previewURL, tags, largeImageURL },idx) => (
+              <ImageGalleryItem className="gallery__item" key={idx}>
                 <img
                   src={previewURL}
                   alt={tags}
                   onClick={() => this.handleActivCard(largeImageURL)}
                 />
-              </li>
+              </ImageGalleryItem>
             )
           )}
           

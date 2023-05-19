@@ -1,8 +1,8 @@
 import { Component } from "react"
-
+import {ButtonCss} from './Button.styled'
 class Button extends Component{
 state={
-    page:1,
+    page:2,
 }
 
 increment=()=>{
@@ -21,7 +21,7 @@ handleOnClick=()=>{
 render(){
     return(
         <>
-    <button type="button" onClick={this.increment}>Load More</button>
+    <ButtonCss type="button" onClick={this.increment} >Load More</ButtonCss>
     </>
     )
 }
