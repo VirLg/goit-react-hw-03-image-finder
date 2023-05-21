@@ -3,7 +3,7 @@ import './App.css';
 
 import SearchBar from './components/SearchBar/SearchBar';
 import Button from 'components/Button/Button';
-import {AppDiv} from './App.styled'
+import { AppDiv } from './App.styled';
 
 import ImageGallery from 'components/ImageGallery/ImageGallery';
 
@@ -25,10 +25,9 @@ class App extends React.Component {
 
     if (prevState.searchText !== searchText || prevState.page !== page) {
       this.setState({
-        
         buttonVisible: false,
-      })
-  
+      });
+
       try {
         this.setState({ loading: true });
         const data = await fetch(
@@ -53,8 +52,11 @@ class App extends React.Component {
     });
   };
   getFetch = ({ hits, totalHits }) => {
+    const hitsArr = hits.map(({ tags, largeImageURL, previewURL }) => {
+      return { tags, largeImageURL, previewURL };
+    });
 
-    this.setState(prevState => ({ images: [...prevState.images, ...hits] }));
+    this.setState(prevState => ({ images: [...prevState.images, ...hitsArr] }));
     if (totalHits === 0)
       this.setState({
         images: [],
@@ -85,5 +87,3 @@ class App extends React.Component {
 }
 
 export default App;
-
-

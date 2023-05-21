@@ -3,36 +3,40 @@ import { ModalBackdrop, ModalItem } from './ModalWindow.styled';
 
 class ModalWindow extends React.Component {
   state = {
-    item: null,
-    close:true,
+    close: true,
   };
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.item !== this.props.itemCard) {
-      this.setState({ item: this.props.itemCard });
-    }
-  }
 
   componentDidMount() {
     document.addEventListener('keydown', this.handlePressEscape);
-    this.setState({ item: this.props.itemCard })
   }
 
-
-
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handlePressEscape);
+  }
   handlePressEscape = e => {
     console.log('press');
-    if (e.code === 'Escape') this.setState({close:false});
+    if (e.code === 'Escape') this.setState({ close: false });
+  };
+
+  handleClick = e => {
+    console.log(e);
+    if (e.target === e.currentTarget) {
+      this.setState({ close: false });
+    }
   };
 
   render() {
-    return (<>
-     { this.state.close&&<ModalBackdrop className="Modal__Backdrop">
-     <ModalItem className="Modal__Item">
-       <img src={this.state.item} alt="" />
-     </ModalItem>
-   </ModalBackdrop>}
-   </>);
+    return (
+      <>
+        {this.state.close && (
+          <ModalBackdrop className="Modal__Backdrop" onClick={this.handleClick}>
+            <ModalItem className="Modal__Item">
+              <div>{this.props.children}</div>
+            </ModalItem>
+          </ModalBackdrop>
+        )}
+      </>
+    );
   }
 }
 

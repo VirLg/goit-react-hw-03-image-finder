@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import ModalWindow from '../ModalWindow/ModalWindov';
-import {ImageGalleryItem} from './ImageItem.styled'
+import { ImageGalleryItem } from './ImageItem.styled';
 
 class ImageItem extends Component {
   state = {
@@ -15,13 +15,14 @@ class ImageItem extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.images !== this.props.card) {
-      this.setState(()=>({ images: this.props.card }));
+      console.log(this.state.images);
+      this.setState(() => ({ images: this.props.card }));
     }
   }
 
   handleActivCard = largeImageURL => {
     if (largeImageURL) {
-      this.setState({activeCard:largeImageURL})
+      this.setState({ activeCard: largeImageURL });
       this.toggleModal();
     }
 
@@ -34,7 +35,7 @@ class ImageItem extends Component {
       <>
         {this.state.images &&
           this.state.images.map(
-            ({ id, previewURL, tags, largeImageURL },idx) => (
+            ({ id, previewURL, tags, largeImageURL }, idx) => (
               <ImageGalleryItem className="gallery__item" key={idx}>
                 <img
                   src={previewURL}
@@ -44,9 +45,12 @@ class ImageItem extends Component {
               </ImageGalleryItem>
             )
           )}
-          
-      {this.state.toggleSwitch&&<ModalWindow 
-            itemCard={this.state.activeCard}/>}
+
+        {this.state.toggleSwitch && (
+          <ModalWindow>
+            <img src={this.state.activeCard} alt="" />
+          </ModalWindow>
+        )}
       </>
     );
   }
