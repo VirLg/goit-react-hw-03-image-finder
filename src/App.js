@@ -4,7 +4,7 @@ import './App.css';
 import SearchBar from './components/SearchBar/SearchBar';
 import Button from 'components/Button/Button';
 import { AppDiv } from './App.styled';
-
+import { handleOnClick } from './components/Button/Button';
 import ImageGallery from 'components/ImageGallery/ImageGallery';
 
 const BASE_URL = 'https://pixabay.com/api/';
@@ -22,7 +22,7 @@ class App extends React.Component {
 
   async componentDidUpdate(prevProps, prevState) {
     const { searchText, page } = this.state;
-
+    console.log(handleOnClick);
     if (prevState.searchText !== searchText || prevState.page !== page) {
       this.setState({
         buttonVisible: false,
@@ -45,6 +45,11 @@ class App extends React.Component {
       }
     }
   }
+  handleOnClick = () => {
+    console.log(handleOnClick());
+    console.log(1);
+  };
+
   heandleSearch = searchText => {
     this.setState({
       searchText: searchText,
@@ -67,8 +72,10 @@ class App extends React.Component {
       });
   };
 
-  handleLoadMore = number => {
-    this.setState({ page: number });
+  handleLoadMore = onClick => {
+    console.log(onClick);
+    console.log(handleOnClick());
+    console.log(this.handleLoadMore);
   };
 
   render() {
